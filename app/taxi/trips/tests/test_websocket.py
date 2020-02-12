@@ -47,13 +47,14 @@ class TestWebSocket:
         )
         communicator = WebsocketCommunicator(
             application=application,
-            path=f'/taxi/?token={access}'
+            path='/taxi/'
         )
         connected, _ = await communicator.connect()
         message = {
             'type': 'echo.message',
             'data': 'This is a test message.',
         }
+        assert connected is False
         await communicator.send_json_to(message)
         response = await communicator.receive_json_from()
         assert message == response
